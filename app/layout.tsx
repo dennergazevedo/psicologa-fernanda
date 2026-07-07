@@ -16,9 +16,14 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
+const SITE_URL = "https://www.psifernandapires.com.br";
+const SITE_TITLE = "Fernanda Pires | Psicóloga & Neuropsicóloga";
+const SITE_DESCRIPTION = "Cuidando da sua saúde mental com avaliação neuropsicológica, TCC, Terapia do Esquema, TDAH e TEA. Atendimento presencial em João Monlevade/MG e online para todo o Brasil.";
+
 export const metadata: Metadata = {
-  title: "Fernanda Pires | Psicóloga & Neuropsicóloga",
-  description: "Cuidando da sua saúde mental com avaliação neuropsicológica, TCC, Terapia do Esquema, TDAH e TEA. Atendimento presencial em João Monlevade/MG e online para todo o Brasil.",
+  metadataBase: new URL(SITE_URL),
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
   keywords: [
     "Fernanda Pires",
     "Psicóloga",
@@ -33,6 +38,55 @@ export const metadata: Metadata = {
     "Psicologia Online"
   ],
   authors: [{ name: "Fernanda Pires" }],
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    url: SITE_URL,
+    siteName: SITE_TITLE,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [
+      {
+        url: "/perfil.webp",
+        width: 1200,
+        height: 1440,
+        alt: "Fernanda Pires - Psicóloga e Neuropsicóloga",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: ["/perfil.webp"],
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Psychologist",
+  name: "Fernanda Pires",
+  image: `${SITE_URL}/perfil.webp`,
+  url: SITE_URL,
+  telephone: "+5531995631699",
+  email: "psifernandapires@gmail.com",
+  description: SITE_DESCRIPTION,
+  identifier: "CRP 04/63320",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "João Monlevade",
+    addressRegion: "MG",
+    addressCountry: "BR",
+  },
+  areaServed: "BR",
+  sameAs: ["https://instagram.com/psi.fernandapires"],
 };
 
 export default function RootLayout({
@@ -45,6 +99,12 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${cormorant.variable} ${dmSans.variable} h-full scroll-smooth antialiased`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="min-h-full flex flex-col font-sans text-stone-800 bg-[#FAF6F0]">
         {children}
       </body>
